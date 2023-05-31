@@ -7,6 +7,7 @@ import { IQuote, IQuotesWithName } from "../interfaces/interfaces";
 import {QuotesIcon} from '../images/quotesIcon'
 
 export const Quotes = ({movieId, characterId, name }: { movieId?: string, characterId?: string, name?: string }) => {
+const [loading, setLoading] = useState(true)
 const [quotes, setQuotes] = useState<IQuote[]>([]);
 const [showModal, setShowModal] = useState(false);
 const [page, setPage] = useState({current: 1, total: 1})
@@ -21,10 +22,12 @@ const [page, setPage] = useState({current: 1, total: 1})
                 const quotesWithNames = await Promise.all(quotes.map(async (quote: any) => await getCharacter(quote.character))).then(res => res.map((res, index) => { return {...items.docs[index], characterName: res.docs[0].name}}))
                 setQuotes(quotesWithNames);
                 setPage({current: items.page, total: items.pages})
+                setLoading(items.loaded);
                 
             } else if (characterId){
                 const items = await getCharacterQuotes(characterId);
                 setQuotes(items.docs);
+                setLoading(items.loaded);
             }
         }
         fetchData().catch(console.error);
@@ -69,7 +72,7 @@ const [page, setPage] = useState({current: 1, total: 1})
                             }
                             className="rounded-md bg-slate-200 px-4 py-2"
                         >Show More</button>
-                        </div>: <div>Sorry, no quotes exists.</div>}
+                        </div>: <div>{loading? `loading...`: `Sorry, there are no quotes.`}</div>}
                         </div>
 
 

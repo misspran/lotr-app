@@ -22,5 +22,6 @@ export const getMovieQuotes = async (id: string, page: number) => {
     let res = await fetch(movieQuoteUrl, {
      headers: HEADERS,
      });
-     return await res.json();
+     res = await res.json();
+     return { ...res.json(), loaded: true }
 }
