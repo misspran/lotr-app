@@ -3,7 +3,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Getting Started
 
 - First create an .env.local file.
-- add NEXT_PUBLIC_API_KEY=[your api key for https://the-one-api.dev/]. You may need to sign up to get one. 
+- Add NEXT_PUBLIC_API_KEY=[your api key for https://the-one-api.dev/]. Note: You may need to sign up to get one. 
 
 First, run the development server:
 
