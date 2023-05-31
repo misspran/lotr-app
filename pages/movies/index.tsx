@@ -1,12 +1,9 @@
 'use client';
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { getMovies } from '../../apis/movies';
 import { IMovie } from '../../interfaces/interfaces'
-import {QuotesIcon} from '../../images/quotesIcon'
 import {Quotes} from '../quotes';
-import type { GetStaticProps, NextPage } from 'next'
-import { NavBar } from "../../components/NavBar";
 
 export const Movies = () => {
 const [movies, setMovies] = useState<IMovie[]>([]);

@@ -89,3 +89,4 @@ const [page, setPage] = useState({current: 1, total: 1})
         </>
     )
 };
+export default Quotes;

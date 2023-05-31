@@ -1,11 +1,9 @@
 'use client';
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { getCharacters } from '../../apis/characters';
 import { ICharacter } from "../../interfaces/interfaces";
-import { QuotesIcon } from "../../images/quotesIcon";
 import { Quotes } from "../quotes";
-import { NavBar } from "../../components/NavBar";
 import { Pagination} from "../../components/Pagination";
 import { useRouter } from "next/router";
 
