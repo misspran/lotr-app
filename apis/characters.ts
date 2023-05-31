@@ -23,5 +23,5 @@ export const getCharacterQuotes = async (id: string) => {
    let res = await fetch(characterQuoteUrl, {
     headers: HEADERS,
     });
-    return { ...res.json(), loaded: true }
+    return await res.json();
 }
