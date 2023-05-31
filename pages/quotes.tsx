@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getCharacter, getCharacterQuotes } from '../apis/characters';
-import { getMovie, getMovieQuotes } from '../apis/movies';
+import { getMovieQuotes } from '../apis/movies';
 import { IQuote, IQuotesWithName } from "../interfaces/interfaces";
 import {QuotesIcon} from '../images/quotesIcon'
 
@@ -18,8 +18,8 @@ const [page, setPage] = useState({current: 1, total: 1})
             if(movieId){
                 const items = await getMovieQuotes(movieId, page.current);
                 const quotes = items.docs;
-                setQuotes(quotes);
-                console.log(items)
+                const quotesWithNames = await Promise.all(quotes.map(async (quote: any) => await getCharacter(quote.character))).then(res => res.map((res, index) => { return {...items.docs[index], characterName: res.docs[0].name}}))
+                setQuotes(quotesWithNames);
                 setPage({current: items.page, total: items.pages})
                 
             } else if (characterId){
@@ -48,16 +48,17 @@ const [page, setPage] = useState({current: 1, total: 1})
                         <div className="p-6 relative flex-auto">
                         { quotes?.length ? 
                         <div> 
-                        {quotes.map((lotrQuotes: IQuote) => 
+                        {quotes.map((lotrQuotes: IQuotesWithName) => 
                             <div key={lotrQuotes._id} className="border-spacing-2">
-                                <div className="p-2 text-left">{lotrQuotes.dialog}</div>
+                                <div className="p-2 text-left">{lotrQuotes.dialog} {lotrQuotes.characterName? `- ${lotrQuotes.characterName}`: null}</div>
                             </div>
                         )}
                         <button onClick={
                             async () => { 
                                     if(movieId && page.current<=page.total){
                                         const items = await getMovieQuotes(movieId, page.current + 1);
-                                        setQuotes([ ...quotes, ...items.docs]);
+                                        const quotesWithNames = await Promise.all(items.docs.map(async (quote: any) => await getCharacter(quote.character))).then(res => res.map((res, index) => { return {...items.docs[index], characterName: res.docs[0].name}}))
+                                        setQuotes([ ...quotes, ...quotesWithNames]);
                                         setPage({current: items.page, total: items.pages})
                                         
                                     } else if (characterId){

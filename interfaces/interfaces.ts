@@ -39,5 +39,5 @@ export interface IResponse {
 }
 
 export interface IQuotesWithName extends IQuote {
-    characterName: string,
+    characterName?: string,
 }
