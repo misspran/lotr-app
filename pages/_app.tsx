@@ -7,10 +7,10 @@ import {NavBar} from "../components/NavBar"
 const App = ({ Component }: { Component: any}) => {
   const {pathname, push}  = useRouter();
   useEffect(() => {
-    if(pathname === '/'){
+    if(pathname === '/_error'){
       push('/movies');
     }
- });
+ }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between py-24">
